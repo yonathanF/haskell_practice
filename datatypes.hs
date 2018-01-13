@@ -57,7 +57,7 @@ employee1 = Employee 1 "Yonathan" ["123 Main Street"]
 
 -- Parameterised types
 -- data Maybe a = Just a | Nothing
-data SimpleType a = SimpleConst a | Nothing deriving (Show)
+data SimpleType a = SimpleConst a | Nothin deriving (Show)
 
 -- we can then create values like
 firstType = SimpleConst "hello world of params"
@@ -77,3 +77,29 @@ data BTree a = Node a (BTree a) (BTree a) | Empty  deriving (Show)
 toList (Const b bs) = b : toList(bs)
 toList Nil = []
 
+-- error handling with error which halts 
+secondEl xs = if null (tail xs)
+           then error "List is too short"
+           else head (tail xs)
+
+-- ^^^ is too aggressive. Using maybe for more control and expressivness 
+betterSecond :: [a] -> Maybe a
+betterSecond [] = Nothing
+betterSecond xs = if null (tail xs)
+                  then Nothing
+                  else Just (head (tail xs))
+
+-- we could use pattern matching for better clarity
+tidySecond :: [a] -> Maybe a
+tidySecond (_:x:_) = Just x
+tidySecond _ = Nothing  -- this catches anything that falls through the above pattern
+
+-- local vars in functions! let starts the declaration and in ends it 
+lend amount balance = let reserve = 100
+                          newBalance = balance - amount
+                      in if balance < reserve
+                            then Nothing
+                            else Just newBalance
+
+          
+                                      
