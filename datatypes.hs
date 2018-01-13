@@ -53,3 +53,17 @@ data Employee = Employee {
 
 
 employee1 = Employee 1 "Yonathan" ["123 Main Street"] 
+
+
+-- Parameterised types
+-- data Maybe a = Just a | Nothing
+data SimpleType a = SimpleConst a | Nothing deriving (Show)
+
+-- we can then create values like
+firstType = SimpleConst "hello world of params"
+
+secondType = SimpleConst 1
+
+-- we can also nest things
+nested = SimpleConst (SimpleConst "Nested!")
+
