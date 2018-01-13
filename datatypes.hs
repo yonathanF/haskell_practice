@@ -67,3 +67,13 @@ secondType = SimpleConst 1
 -- we can also nest things
 nested = SimpleConst (SimpleConst "Nested!")
 
+-- types can be recursive
+data List a = Const a (List a) | Nil deriving (Show)
+
+-- another example of a recursive structure, a b-tree
+data BTree a = Node a (BTree a) (BTree a) | Empty  deriving (Show)
+
+-- this recursively converst the List datatype above to a haskell list 
+toList (Const b bs) = b : toList(bs)
+toList Nil = []
+
