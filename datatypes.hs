@@ -101,5 +101,31 @@ lend amount balance = let reserve = 100
                             then Nothing
                             else Just newBalance
 
-          
-                                      
+-- a strange case of shadowing a param
+quux a = let a = "foo"
+             in a ++ "eek"
+
+-- a can be anything it wants b/c it is never used
+lend2 amount balance = if balance < reserve
+                          then Nothing
+                               else Just newBalance
+                          where reserve = 100
+                                newBalance = balance - amount
+
+-- define vars at the top of a source file to create global vars
+exampleGlobalVar = "Random String As An Example"
+
+-- it is also possible to define functions inside functions!
+pluralise :: String -> [Int] -> [String]
+pluralise word counts = map plural counts
+  where plural 0 = "no " ++ word ++ "s"
+        plural 1 = "one " ++ word
+        plural n = show n ++ " " ++ word ++ "s"
+
+-- guards! Help! haha
+lend3 amount balance
+    |amount <= 0  = Nothing
+    |amount >reserve * 0.5 = Nothing
+    |otherwise = Just newBalance
+  where reserve = 100
+        newBalance = balance - amount 
